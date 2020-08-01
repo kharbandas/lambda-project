@@ -99,8 +99,8 @@ functions:
       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
     - Effect: Allow
       Action:
-      - s3:PutObject
       - s3:GetObject
+      - s3:PutObject
       Resource: arn:aws:s3:::${self:provider.environment.S3_BUCKET}/*
 
 resources:
@@ -111,9 +111,8 @@ resources:
       Properties:
         AttributeDefinitions:
           - AttributeName: todoId
-            AttributeType: S
           - AttributeName: userId
-            AttributeType: S
+            #AttributeType: S
         KeySchema:
           - AttributeName: todoId
             KeyType: HASH
@@ -133,11 +132,6 @@ resources:
         BucketName: ${self:provider.environment.S3_BUCKET}
         CorsConfiguration:
           CorsRules:
-            #-
-              AllowedOrigins:
-                - '*'
-              AllowedHeaders:
-                - '*'
               AllowedMethods:
                 - GET
                 - PUT
